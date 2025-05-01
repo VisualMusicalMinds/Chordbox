@@ -31,8 +31,7 @@
     .chord-box, .empty-box {
       position: relative;
       width: clamp(64px, 14vw, 200px);
-      height: clamp(66px, 14.3vw, 210px); /* 10% taller */
-      border-radius: clamp(10px, 2vw, 20px);
+      border-radius: clamp(4px, 1vw, 10px); /* Less rounded corners */
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -42,7 +41,7 @@
       font-family: Arial, sans-serif;
       color: white;
       background: transparent;
-      transition: width 0.2s, height 0.2s, padding 0.2s;
+      transition: width 0.2s, height 0.2s, padding 0.2s, border-radius 0.2s;
     }
     .chord-box {
       background: #ccc;
@@ -58,12 +57,15 @@
       background: transparent;
       box-shadow: none;
     }
+    /* TOP NOTES BOXES */
     .top-boxes {
       position: absolute;
       top: calc(-1 * clamp(12px, 2.5vw, 35px));
       display: flex;
       gap: clamp(3px, 0.6vw, 10px);
+      z-index: 1;
     }
+    /* Default note box (first row and by default) */
     .note-box {
       width: clamp(22px, 5vw, 70px);
       height: clamp(22px, 5vw, 70px);
@@ -74,7 +76,18 @@
       font-size: clamp(18px, 3vw, 52px);
       font-weight: bold;
       color: white;
-      transition: font-size 0.2s;
+      transition: font-size 0.2s, height 0.2s, width 0.2s;
+      box-sizing: border-box;
+    }
+    /* Make top note boxes on second row 30% shorter (rectangle not square) */
+    .chord-row.second-row .note-box {
+      height: calc(clamp(22px, 5vw, 70px) * 0.7); /* 30% shorter */
+    }
+    /* For browsers that don't support calc with clamp, use min() as fallback */
+    @supports not (height: calc(clamp(22px, 5vw, 70px) * 0.7)) {
+      .chord-row.second-row .note-box {
+        height: clamp(15px, 3.5vw, 49px);
+      }
     }
     .note-b { background-color: #AF52DE;}
     .note-d { background-color: #FF9500;}
@@ -91,8 +104,11 @@
       margin-left: 1px;
       font-weight: normal;
     }
-    /* -- CHORD NAME: VERTICALLY LOWERED -- */
-    .chord-name {
+    /* --- FIRST ROW CHORD BOX --- */
+    .chord-row.first-row .chord-box {
+      height: clamp(66px, 14.3vw, 210px);
+    }
+    .chord-row.first-row .chord-name {
       font-size: clamp(42px, 9vw, 130px);
       font-weight: bold;
       margin: 0;
@@ -102,10 +118,28 @@
       align-items: center;
       justify-content: center;
       width: 100%;
-      /* push the chord name down about 15% of the box height */
       position: relative;
-      top: 15%;
+      top: 15%; /* push down by 15% */
       min-height: clamp(42px, 9vw, 130px);
+      transition: top 0.2s;
+    }
+    /* --- SECOND ROW CHORD BOX --- */
+    .chord-row.second-row .chord-box {
+      height: clamp(44px, 9.5vw, 140px);
+    }
+    .chord-row.second-row .chord-name {
+      font-size: clamp(18px, 4vw, 46px);
+      font-weight: bold;
+      margin: 0;
+      line-height: 1;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      position: relative;
+      top: 8%;
+      min-height: clamp(18px, 4vw, 46px);
       transition: top 0.2s;
     }
     .minor {
@@ -148,10 +182,23 @@
       .chord-row {
         gap: 1vw;
       }
-      .chord-box, .empty-box {
+      .chord-row.first-row .chord-box,
+      .chord-row.second-row .chord-box {
         width: clamp(44px, 17vw, 120px);
+      }
+      .chord-row.first-row .chord-box {
         height: clamp(44px, 17.6vw, 132px);
-        padding: clamp(5px, 1vw, 14px) clamp(1px, 0.4vw, 4px) clamp(4px, 0.8vw, 7px);
+      }
+      .chord-row.second-row .chord-box {
+        height: clamp(30px, 12vw, 88px);
+      }
+      .chord-row.second-row .note-box {
+        height: calc(clamp(14px, 3.5vw, 46px) * 0.7);
+      }
+      @supports not (height: calc(clamp(14px, 3.5vw, 46px) * 0.7)) {
+        .chord-row.second-row .note-box {
+          height: clamp(10px, 2.5vw, 33px);
+        }
       }
       .top-boxes {
         top: calc(-1 * clamp(8px, 2vw, 22px));
@@ -167,10 +214,23 @@
         gap: 0.5vw;
         margin-bottom: 3vw;
       }
-      .chord-box, .empty-box {
+      .chord-row.first-row .chord-box,
+      .chord-row.second-row .chord-box {
         width: clamp(32px, 20vw, 84px);
+      }
+      .chord-row.first-row .chord-box {
         height: clamp(30px, 23.1vw, 84px);
-        padding: clamp(3px, 1vw, 8px) clamp(0.5px, 0.3vw, 2px) clamp(2px, 0.5vw, 5px);
+      }
+      .chord-row.second-row .chord-box {
+        height: clamp(20px, 16vw, 56px);
+      }
+      .chord-row.second-row .note-box {
+        height: calc(clamp(10px, 2.5vw, 33px) * 0.7);
+      }
+      @supports not (height: calc(clamp(10px, 2.5vw, 33px) * 0.7)) {
+        .chord-row.second-row .note-box {
+          height: clamp(7px, 2vw, 23px);
+        }
       }
       .top-boxes {
         top: calc(-1 * clamp(4px, 1vw, 10px));
@@ -186,7 +246,7 @@
 <body>
   <div class="cushion-top"></div>
   <!-- Row 1: All five chord boxes as before -->
-  <div class="chord-row">
+  <div class="chord-row first-row">
     <div class="chord-box chord-a">
       <div class="top-boxes">
         <div class="note-box note-b">B</div>
@@ -241,7 +301,7 @@
     </div>
   </div>
   <!-- Row 2: Only chord boxes in spots 2, 3, 4, empty boxes in 1 and 5 -->
-  <div class="chord-row">
+  <div class="chord-row second-row">
     <div class="empty-box"></div>
     <!-- Box 2: Bm, D / F# -->
     <div class="chord-box chord-b">
