@@ -3,92 +3,282 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chord Box</title>
+  <title>Responsive Chord Box Rows</title>
   <style>
     body {
       background: #f0f0f0;
       display: flex;
-      justify-content: center;
+      flex-direction: column;
+      justify-content: flex-start;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
       margin: 0;
     }
-    .chord-box {
+    .cushion-top {
+      width: 100vw;
+      height: clamp(20px, 6vw, 70px);
+      min-height: 20px;
+      max-height: 70px;
+      flex-shrink: 0;
+      pointer-events: none;
+      background: transparent;
+    }
+    .chord-row {
+      display: flex;
+      gap: 2vw;
+      margin-bottom: 5vw;
+    }
+    .chord-box, .empty-box {
       position: relative;
-      width: 200px;
-      height: 190px;
-      background-color: #00979D; /* teal */
-      border-radius: 20px;
+      width: clamp(64px, 14vw, 200px);
+      height: clamp(60px, 13vw, 190px);
+      border-radius: clamp(10px, 2vw, 20px);
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 30px 10px 20px;
+      padding: clamp(10px, 2vw, 30px) clamp(2px, 0.5vw, 10px) clamp(7px, 1.5vw, 20px);
       box-sizing: border-box;
       font-family: Arial, sans-serif;
       color: white;
+      background: transparent;
+      transition: width 0.2s, height 0.2s, padding 0.2s;
+    }
+    .chord-box {
+      background: #ccc;
+    }
+    .chord-a { background-color: #007AFF;}
+    .chord-b { background-color: #AF52DE;}
+    .chord-e { background-color: #FFCC00;}
+    .chord-d { background-color: #FF9500;}
+    .chord-g { background-color: #5afaf5;}
+    .chord-c { background-color: #FF3B30;}
+    .chord-f { background-color: #34C759;}
+    .empty-box {
+      background: transparent;
+      box-shadow: none;
     }
     .top-boxes {
       position: absolute;
-      top: -35px;
+      top: calc(-1 * clamp(12px, 2.5vw, 35px));
       display: flex;
-      gap: 10px;
+      gap: clamp(3px, 0.6vw, 10px);
     }
-    .small-box {
-      width: 70px;
-      height: 70px;
+    .note-box {
+      width: clamp(22px, 5vw, 70px);
+      height: clamp(22px, 5vw, 70px);
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 10px;
-      font-size: 52px;
+      border-radius: clamp(3px, 1vw, 10px);
+      font-size: clamp(18px, 3vw, 52px);
       font-weight: bold;
+      color: white;
+      transition: font-size 0.2s;
     }
-    .purple {
-      background-color: purple;
+    .note-b { background-color: #AF52DE;}
+    .note-d { background-color: #FF9500;}
+    .note-g { background-color: #5afaf5;}
+    .note-c { background-color: #FF3B30;}
+    .note-f { background-color: #34C759;}
+    .note-a { background-color: #007AFF;}
+    .note-e { background-color: #FFCC00;}
+    /* Accidental styling */
+    .accidental {
+      font-size: 0.5em;
+      vertical-align: top;
+      position: relative;
+      top: -0.4em;
+      margin-left: 1px;
+      font-weight: normal;
     }
-    .orange {
-      background-color: orange;
-    }
-    .big-letter {
-      font-size: 130px;
+    /* Chord Name with minor 'm' inline and small */
+    .chord-name {
+      font-size: clamp(42px, 9vw, 130px);
       font-weight: bold;
       margin: 0;
       line-height: 1;
+      color: white;
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+    }
+    .minor {
+      font-size: 0.5em;
+      font-weight: normal;
+      margin-left: 0.02em;
+      display: inline;
+      vertical-align: baseline;
+      line-height: 1;
+      letter-spacing: 0.01em;
     }
     .bottom-section {
       position: absolute;
-      bottom: -38px;
+      bottom: calc(-1 * clamp(13px, 2vw, 38px));
       display: flex;
       flex-direction: column;
       align-items: center;
       width: 100%;
+      /* The white box is now transparent, so just use the text style */
     }
-    .roman-numeral-box {
-      background: white;
+    .chord-position {
+      /* Remove background, keep the shape for spacing */
+      background: transparent;
       color: black;
-      width: 140px;
-      height: 70px;
+      width: clamp(44px, 10vw, 140px);
+      height: clamp(22px, 5vw, 70px);
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: 10px;
-      font-size: 52px;
+      border-radius: clamp(3px, 1vw, 10px);
+      font-size: clamp(18px, 3vw, 52px);
       font-family: 'Georgia', serif;
       font-weight: bold;
+      transition: font-size 0.2s;
+      /* Optionally, make the text a bit more readable if on a dark background */
+      text-shadow: 0 1px 4px rgba(255,255,255,0.55);
+    }
+    @media (max-width: 700px) {
+      .chord-row {
+        gap: 1vw;
+      }
+      .chord-box, .empty-box {
+        width: clamp(44px, 17vw, 120px);
+        height: clamp(40px, 16vw, 110px);
+        padding: clamp(5px, 1vw, 14px) clamp(1px, 0.4vw, 4px) clamp(4px, 0.8vw, 7px);
+      }
+      .top-boxes {
+        top: calc(-1 * clamp(8px, 2vw, 22px));
+      }
+      .bottom-section {
+        bottom: calc(-1 * clamp(8px, 2vw, 22px));
+      }
+      .cushion-top {
+        height: clamp(10px, 9vw, 40px);
+        min-height: 10px;
+        max-height: 40px;
+      }
+    }
+    @media (max-width: 480px) {
+      .chord-row {
+        gap: 0.5vw;
+        margin-bottom: 3vw;
+      }
+      .chord-box, .empty-box {
+        width: clamp(32px, 20vw, 84px);
+        height: clamp(28px, 21vw, 76px);
+        padding: clamp(3px, 1vw, 8px) clamp(0.5px, 0.3vw, 2px) clamp(2px, 0.5vw, 5px);
+      }
+      .top-boxes {
+        top: calc(-1 * clamp(4px, 1vw, 10px));
+      }
+      .bottom-section {
+        bottom: calc(-1 * clamp(4px, 1vw, 10px));
+      }
+      .cushion-top {
+        height: clamp(4px, 7vw, 20px);
+        min-height: 4px;
+        max-height: 20px;
+      }
     }
   </style>
 </head>
 <body>
-  <div class="chord-box">
-    <div class="top-boxes">
-      <div class="small-box purple">B</div>
-      <div class="small-box orange">D</div>
+  <div class="cushion-top"></div>
+  <!-- Row 1: All five chord boxes as before -->
+  <div class="chord-row">
+    <div class="chord-box chord-a">
+      <div class="top-boxes">
+        <div class="note-box note-b">B</div>
+        <div class="note-box note-d">D</div>
+      </div>
+      <div class="chord-name">A</div>
+      <div class="bottom-section">
+        <div class="chord-position">V/V</div>
+      </div>
     </div>
-    <div class="big-letter">G</div>
-    <div class="bottom-section">
-      <div class="roman-numeral-box">I</div>
+    <div class="chord-box chord-d">
+      <div class="top-boxes">
+        <div class="note-box note-f">
+          F<span class="accidental">&#x266F;</span>
+        </div>
+        <div class="note-box note-a">A</div>
+      </div>
+      <div class="chord-name">D</div>
+      <div class="bottom-section">
+        <div class="chord-position">V</div>
+      </div>
     </div>
+    <div class="chord-box chord-g">
+      <div class="top-boxes">
+        <div class="note-box note-b">B</div>
+        <div class="note-box note-d">D</div>
+      </div>
+      <div class="chord-name">G</div>
+      <div class="bottom-section">
+        <div class="chord-position">I</div>
+      </div>
+    </div>
+    <div class="chord-box chord-c">
+      <div class="top-boxes">
+        <div class="note-box note-e">E</div>
+        <div class="note-box note-g">G</div>
+      </div>
+      <div class="chord-name">C</div>
+      <div class="bottom-section">
+        <div class="chord-position">IV</div>
+      </div>
+    </div>
+    <div class="chord-box chord-f">
+      <div class="top-boxes">
+        <div class="note-box note-a">A</div>
+        <div class="note-box note-c">C</div>
+      </div>
+      <div class="chord-name">F</div>
+      <div class="bottom-section">
+        <div class="chord-position">V/IV</div>
+      </div>
+    </div>
+  </div>
+  <!-- Row 2: Only chord boxes in spots 2, 3, 4, empty boxes in 1 and 5 -->
+  <div class="chord-row">
+    <div class="empty-box"></div>
+    <!-- Box 2: Bm, D / F# -->
+    <div class="chord-box chord-b">
+      <div class="top-boxes">
+        <div class="note-box note-d">D</div>
+        <div class="note-box note-f">
+          F<span class="accidental">&#x266F;</span>
+        </div>
+      </div>
+      <div class="chord-name">B<span class="minor">m</span></div>
+      <div class="bottom-section">
+        <div class="chord-position">iii</div>
+      </div>
+    </div>
+    <!-- Box 3: Em, G / B -->
+    <div class="chord-box chord-e">
+      <div class="top-boxes">
+        <div class="note-box note-g">G</div>
+        <div class="note-box note-b">B</div>
+      </div>
+      <div class="chord-name">E<span class="minor">m</span></div>
+      <div class="bottom-section">
+        <div class="chord-position">vi</div>
+      </div>
+    </div>
+    <!-- Box 4: Am, C / E -->
+    <div class="chord-box chord-a">
+      <div class="top-boxes">
+        <div class="note-box note-c">C</div>
+        <div class="note-box note-e">E</div>
+      </div>
+      <div class="chord-name">A<span class="minor">m</span></div>
+      <div class="bottom-section">
+        <div class="chord-position">ii</div>
+      </div>
+    </div>
+    <div class="empty-box"></div>
   </div>
 </body>
 </html>
