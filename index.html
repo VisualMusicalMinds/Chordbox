@@ -31,7 +31,8 @@
     .chord-box, .empty-box {
       position: relative;
       width: clamp(64px, 14vw, 200px);
-      height: clamp(60px, 13vw, 190px);
+      /* Increased height by 10% */
+      height: clamp(66px, 14.3vw, 210px);
       border-radius: clamp(10px, 2vw, 20px);
       display: flex;
       flex-direction: column;
@@ -119,24 +120,29 @@
       flex-direction: column;
       align-items: center;
       width: 100%;
-      /* The white box is now transparent, so just use the text style */
     }
     .chord-position {
-      /* Remove background, keep the shape for spacing */
       background: transparent;
-      color: black;
+      color: white;
       width: clamp(44px, 10vw, 140px);
       height: clamp(22px, 5vw, 70px);
       display: flex;
       align-items: center;
       justify-content: center;
-      border-radius: clamp(3px, 1vw, 10px);
+      /* Remove border-radius for sharp corners */
+      border-radius: 0;
       font-size: clamp(18px, 3vw, 52px);
       font-family: 'Georgia', serif;
       font-weight: bold;
       transition: font-size 0.2s;
-      /* Optionally, make the text a bit more readable if on a dark background */
-      text-shadow: 0 1px 4px rgba(255,255,255,0.55);
+      text-shadow: 0 1px 4px rgba(0,0,0,0.15);
+      /* Only top border white */
+      border-top: 2.5px solid white;
+      border-right: none;
+      border-bottom: none;
+      border-left: none;
+      /* Remove background and other borders */
+      box-sizing: border-box;
     }
     @media (max-width: 700px) {
       .chord-row {
@@ -144,7 +150,8 @@
       }
       .chord-box, .empty-box {
         width: clamp(44px, 17vw, 120px);
-        height: clamp(40px, 16vw, 110px);
+        /* Increased height by 10% */
+        height: clamp(44px, 17.6vw, 132px);
         padding: clamp(5px, 1vw, 14px) clamp(1px, 0.4vw, 4px) clamp(4px, 0.8vw, 7px);
       }
       .top-boxes {
@@ -166,7 +173,8 @@
       }
       .chord-box, .empty-box {
         width: clamp(32px, 20vw, 84px);
-        height: clamp(28px, 21vw, 76px);
+        /* Increased height by 10% */
+        height: clamp(30px, 23.1vw, 84px);
         padding: clamp(3px, 1vw, 8px) clamp(0.5px, 0.3vw, 2px) clamp(2px, 0.5vw, 5px);
       }
       .top-boxes {
