@@ -31,8 +31,7 @@
     .chord-box, .empty-box {
       position: relative;
       width: clamp(64px, 14vw, 200px);
-      /* Increased height by 10% */
-      height: clamp(66px, 14.3vw, 210px);
+      height: clamp(66px, 14.3vw, 210px); /* 10% taller */
       border-radius: clamp(10px, 2vw, 20px);
       display: flex;
       flex-direction: column;
@@ -84,7 +83,6 @@
     .note-f { background-color: #34C759;}
     .note-a { background-color: #007AFF;}
     .note-e { background-color: #FFCC00;}
-    /* Accidental styling */
     .accidental {
       font-size: 0.5em;
       vertical-align: top;
@@ -93,7 +91,7 @@
       margin-left: 1px;
       font-weight: normal;
     }
-    /* Chord Name with minor 'm' inline and small */
+    /* -- CHORD NAME: VERTICALLY LOWERED -- */
     .chord-name {
       font-size: clamp(42px, 9vw, 130px);
       font-weight: bold;
@@ -101,12 +99,18 @@
       line-height: 1;
       color: white;
       display: flex;
-      align-items: flex-end;
+      align-items: center;
       justify-content: center;
+      width: 100%;
+      /* push the chord name down about 15% of the box height */
+      position: relative;
+      top: 15%;
+      min-height: clamp(42px, 9vw, 130px);
+      transition: top 0.2s;
     }
     .minor {
       font-size: 0.5em;
-      font-weight: normal;
+      font-weight: bold;
       margin-left: 0.02em;
       display: inline;
       vertical-align: baseline;
@@ -114,34 +118,30 @@
       letter-spacing: 0.01em;
     }
     .bottom-section {
-      position: absolute;
-      bottom: calc(-1 * clamp(13px, 2vw, 38px));
+      width: 100%;
+      margin-top: clamp(6px, 1vw, 2px);
       display: flex;
       flex-direction: column;
       align-items: center;
-      width: 100%;
     }
     .chord-position {
       background: transparent;
       color: white;
       width: clamp(44px, 10vw, 140px);
-      height: clamp(22px, 5vw, 70px);
+      height: clamp(22px, 4vw, 70px);
       display: flex;
       align-items: center;
       justify-content: center;
-      /* Remove border-radius for sharp corners */
       border-radius: 0;
       font-size: clamp(18px, 3vw, 52px);
       font-family: 'Georgia', serif;
       font-weight: bold;
       transition: font-size 0.2s;
       text-shadow: 0 1px 4px rgba(0,0,0,0.15);
-      /* Only top border white */
       border-top: 2.5px solid white;
       border-right: none;
       border-bottom: none;
       border-left: none;
-      /* Remove background and other borders */
       box-sizing: border-box;
     }
     @media (max-width: 700px) {
@@ -150,15 +150,11 @@
       }
       .chord-box, .empty-box {
         width: clamp(44px, 17vw, 120px);
-        /* Increased height by 10% */
         height: clamp(44px, 17.6vw, 132px);
         padding: clamp(5px, 1vw, 14px) clamp(1px, 0.4vw, 4px) clamp(4px, 0.8vw, 7px);
       }
       .top-boxes {
         top: calc(-1 * clamp(8px, 2vw, 22px));
-      }
-      .bottom-section {
-        bottom: calc(-1 * clamp(8px, 2vw, 22px));
       }
       .cushion-top {
         height: clamp(10px, 9vw, 40px);
@@ -173,15 +169,11 @@
       }
       .chord-box, .empty-box {
         width: clamp(32px, 20vw, 84px);
-        /* Increased height by 10% */
         height: clamp(30px, 23.1vw, 84px);
         padding: clamp(3px, 1vw, 8px) clamp(0.5px, 0.3vw, 2px) clamp(2px, 0.5vw, 5px);
       }
       .top-boxes {
         top: calc(-1 * clamp(4px, 1vw, 10px));
-      }
-      .bottom-section {
-        bottom: calc(-1 * clamp(4px, 1vw, 10px));
       }
       .cushion-top {
         height: clamp(4px, 7vw, 20px);
